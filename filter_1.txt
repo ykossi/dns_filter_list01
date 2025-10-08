@@ -7,7 +7,6 @@
 !
 ! Compiled by @adguard/hostlist-compiler v1.0.35
 !
-||xnxx.com^
 ||youtube.com^
 ||arrasinutile.com^
 ||talkativeend.com^
