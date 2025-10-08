@@ -7,7 +7,7 @@
 !
 ! Compiled by @adguard/hostlist-compiler v1.0.35
 !
-||youtube.com^
+||tiktok.com/^
 ||arrasinutile.com^
 ||talkativeend.com^
 ||adtscriptshark.com^
