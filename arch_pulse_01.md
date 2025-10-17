@@ -1,11 +1,10 @@
 ```mermaid
-graph TB
  subgraph DC["🏢 COLLECTEUR"]
     direction TB
         SCRIPT["🐍 Script Python<br>(Ingestion TPE)"]
         MODEM["📱 Modem 4G/5G<br>(Monitoring APN)"]
-        n2["Influxdb"]
-        n1["Telegraf"]
+        n7["Influxdb Container"]
+        n8["Telgraf Container"]
   end
  subgraph BACKEND["🔧 Backend Microservices"]
         API["⚡ API REST<br>(FastAPI)"]
@@ -56,15 +55,17 @@ graph TB
     REACT -- 🔐 HTTPS / OAuth2 --> USERS
     GRAFANA --> USERS
     CHATBOT --> USERS
-    MODEM --> n1
-    n1 --> n2
-    SCRIPT --> n2
     s1 L_s1_SCRIPT_0@--> SCRIPT
     INFLUX["Chiffrement TLS 1.3"] L_INFLUX_INFLUX_CLOUD_0@--> INFLUX_CLOUD
-    n2 L_n2_INFLUX_0@--- INFLUX
-    SITES L_SITES_n1_0@--> n1
-    n2@{ icon: "aws:arch-aws-deep-learning-containers", pos: "t", h: 160}
-    n1@{ icon: "aws:arch-aws-deep-learning-containers", pos: "t", h: 166}
+    MODEM --> n8
+    n8 --> n7
+    SCRIPT --> n7
+    TPE2A L_TPE2A_n8_0@--> n8
+    TPE1A --> n8
+    n6 --> n8
+    n7 L_n7_INFLUX_0@--> INFLUX
+    n7@{ shape: rect}
+    n8@{ shape: rect}
     n6@{ shape: rect}
     n5@{ shape: rect}
      API:::backendStyle
@@ -94,14 +95,16 @@ graph TB
     classDef Pine stroke-width:1px, stroke-dasharray:none, stroke:#254336, fill:#27654A, color:#FFFFFF
     classDef cloudStyle fill:#fff3cd, stroke:#ffc107, stroke-width:3px, color:#000
     style SCRIPT stroke:#000000
+    style n7 stroke:#000000
+    style n8 stroke:#000000
     style TPE2A stroke:#000000
     style SITE1 stroke:#000000
     style s1 stroke:#000000
-    style SITES fill:#C8E6C9,stroke:#000000
     style CLOUD_AWS fill:#FFE0B2,stroke:#000000
+    style SITES fill:#C8E6C9,stroke:#000000
     style DC stroke:#000000
     L_s1_SCRIPT_0@{ animation: slow } 
     L_INFLUX_INFLUX_CLOUD_0@{ animation: slow } 
-    L_n2_INFLUX_0@{ animation: slow } 
-    L_SITES_n1_0@{ animation: slow }
+    L_TPE2A_n8_0@{ animation: slow } 
+    L_n7_INFLUX_0@{ animation: slow }
 ```
