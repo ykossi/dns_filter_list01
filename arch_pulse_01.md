@@ -85,12 +85,12 @@ graph TB
  end
 
  %% Relations Frontend -> Utilisateurs
- REACT -->|🔐 HTTPS / OAuth2| USERS
+ REACT -->|"🔐 HTTPS / OAuth2"| USERS
  GRAFANA --> USERS
  CHATBOT --> USERS
 
- %% Connexions Interzones
- n2 -->|TLS 1.3 (VPN)| INFLUX_CLOUD
+ %% Connexions Interzones (corrigée)
+ n2 -->|"TLS 1·3 VPN sécurisé"| INFLUX_CLOUD
 
  %% ===============================
  %%           STYLES
