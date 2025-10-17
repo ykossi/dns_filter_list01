@@ -2,10 +2,11 @@
 graph TB
  subgraph DC["🏢 COLLECTEUR"]
     direction TB
-        SCRIPT["🐍 Script Python<br>"]
+        SCRIPT["🐍 Script Python<br>(Ingestion TPE)"]
         MODEM["📱 Modem 4G/5G<br>(Monitoring APN)"]
         n7["Influxdb Container"]
         n8["Telgraf Container"]
+        n9["service SFTP/SCP"]
   end
  subgraph BACKEND["🔧 Backend Microservices"]
         API["⚡ API REST<br>(FastAPI)"]
@@ -56,17 +57,19 @@ graph TB
     REACT -- 🔐 HTTPS / OAuth2 --> USERS
     GRAFANA --> USERS
     CHATBOT --> USERS
-    s1 L_s1_SCRIPT_0@--> SCRIPT
     INFLUX["Chiffrement TLS 1.3"] L_INFLUX_INFLUX_CLOUD_0@--> INFLUX_CLOUD
     MODEM L_MODEM_n8_0@--> n8
     n8 L_n8_n7_0@--> n7
-    SCRIPT L_SCRIPT_n7_0@--> n7
+    SCRIPT L_SCRIPT_n7_0@--> n7 & n9
     n7 L_n7_INFLUX_0@--> INFLUX
     TPE2A L_TPE2A_MODEM_0@--> MODEM
     TPE1A L_TPE1A_MODEM_0@--> MODEM
     n6 L_n6_MODEM_0@--> MODEM
+    s1 L_s1_n9_0@--> n9
+    n9 --> SCRIPT
     n7@{ shape: rect}
     n8@{ shape: rect}
+    n9@{ shape: rect}
     n6@{ shape: rect}
     n5@{ shape: rect}
      API:::backendStyle
@@ -98,13 +101,13 @@ graph TB
     style SCRIPT stroke:#000000
     style n7 stroke:#000000
     style n8 stroke:#000000
+    style n9 stroke:#000000
     style TPE2A stroke:#000000
     style SITE1 stroke:#000000
     style s1 stroke:#000000
     style CLOUD_AWS fill:#FFE0B2,stroke:#000000
     style SITES fill:#C8E6C9,stroke:#000000
     style DC stroke:#000000
-    L_s1_SCRIPT_0@{ animation: slow } 
     L_INFLUX_INFLUX_CLOUD_0@{ animation: slow } 
     L_MODEM_n8_0@{ animation: slow } 
     L_n8_n7_0@{ animation: slow } 
@@ -112,6 +115,6 @@ graph TB
     L_n7_INFLUX_0@{ animation: slow } 
     L_TPE2A_MODEM_0@{ animation: slow } 
     L_TPE1A_MODEM_0@{ animation: slow } 
-    L_n6_MODEM_0@{ animation: slow }
-
+    L_n6_MODEM_0@{ animation: slow } 
+    L_s1_n9_0@{ animation: slow }
 ```
