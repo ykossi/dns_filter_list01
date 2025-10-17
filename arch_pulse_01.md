@@ -1,7 +1,3 @@
-# 🧭 Architecture du Système de Collecte & Monitoring Monétique
-
-Ce schéma décrit les différents composants — du collecteur local jusqu’au cloud (AWS/Hetzner) — ainsi que leurs interactions et utilisateurs finaux.
-
 ```mermaid
 graph TB
  %% ===============================
