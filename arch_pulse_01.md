@@ -2,7 +2,7 @@
 graph TB
  subgraph DC["🏢 COLLECTEUR"]
     direction TB
-        SCRIPT["🐍 Script Python<br>(Ingestion TPE)"]
+        SCRIPT["🐍 Script Python<br>"]
         MODEM["📱 Modem 4G/5G<br>(Monitoring APN)"]
         n7["Influxdb Container"]
         n8["Telgraf Container"]
