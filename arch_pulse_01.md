@@ -35,8 +35,8 @@ graph TB
         IT["🔧 IT / Support"]
   end
  subgraph SITE1["Site TPEs"]
-        TPE1A["💳 TPE 01 AVEC PUCE<br>(192.168.1.50)"]
-        n6["💳 TPE 02 AVEC PUCE<br>(192.168.1.50)"]
+        TPE1A["💳 TPE 01 AVEC PUCE"]
+        n6["💳 TPE 02 AVEC PUCE"]
   end
  subgraph SITE2["Site ATMs<br>"]
         TPE2A["💳 ATM"]
