@@ -1,4 +1,5 @@
 ```mermaid
+graph TB
  subgraph DC["🏢 COLLECTEUR"]
     direction TB
         SCRIPT["🐍 Script Python<br>(Ingestion TPE)"]
