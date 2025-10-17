@@ -1,3 +1,7 @@
+# 🧭 Architecture du Système de Collecte & Monitoring Monétique
+
+Ce schéma décrit les différents composants — du collecteur local jusqu’au cloud (AWS/Hetzner) — ainsi que leurs interactions et utilisateurs finaux.
+
 ```mermaid
 graph TB
  %% ===============================
@@ -5,8 +9,8 @@ graph TB
  %% ===============================
  subgraph DC["🏢 COLLECTEUR (Bank LAN)"]
     direction TB
-    SCRIPT["🐍 Script Python<br>(Ingestion TPE)"]
-    MODEM["📱 Modem 4G/5G<br>(Monitoring APN)"]
+    SCRIPT["🐍 Script Python<br/>(Ingestion TPE)"]
+    MODEM["📱 Modem 4G/5G<br/>(Monitoring APN)"]
     n1["Telegraf"]
     n2["InfluxDB (Local)"]
     MODEM --> n1
@@ -28,8 +32,8 @@ graph TB
  subgraph SITES["🏪 Réseau APN Privé"]
     direction TB
     subgraph SITE1["Site TPEs"]
-        TPE1A["💳 TPE 01 AVEC PUCE<br>(192.168.1.50)"]
-        n6["💳 TPE 02 AVEC PUCE<br>(192.168.1.51)"]
+        TPE1A["💳 TPE 01 AVEC PUCE<br/>(192.168.1.50)"]
+        n6["💳 TPE 02 AVEC PUCE<br/>(192.168.1.51)"]
     end
     subgraph SITE2["Site ATMs"]
         TPE2A["🏧 ATM"]
@@ -45,22 +49,22 @@ graph TB
 
     %% === BACKEND ===
     subgraph BACKEND["🔧 Backend Microservices"]
-        API["⚡ API REST<br>(FastAPI)"]
+        API["⚡ API REST<br/>(FastAPI)"]
         ENGINE["⚙️ Analytics Engine"]
-        RAG["🤖 Base Vectorielle<br>(RAG IA)"]
+        RAG["🤖 Base Vectorielle<br/>(RAG IA)"]
     end
 
     %% === STOCKAGE ===
     subgraph STORAGE["💾 Stockage"]
-        INFLUX_CLOUD["📈 InfluxDB Cloud<br>(Time-Series)"]
-        S3["🗄️ AWS S3<br>(Archives)"]
-        POSTGRES["🐘 PostgreSQL<br>(Métadonnées)"]
+        INFLUX_CLOUD["📈 InfluxDB Cloud<br/>(Time-Series)"]
+        S3["🗄️ AWS S3<br/>(Archives)"]
+        POSTGRES["🐘 PostgreSQL<br/>(Métadonnées)"]
     end
 
     %% === FRONTEND ===
     subgraph FRONTEND["🖥️ Frontend"]
-        REACT["⚛️ React SPA<br>(Dashboards)"]
-        GRAFANA["📊 Grafana<br>(Visualisation)"]
+        REACT["⚛️ React SPA<br/>(Dashboards)"]
+        GRAFANA["📊 Grafana<br/>(Visualisation)"]
         CHATBOT["💬 Chatbot IA"]
     end
 
@@ -112,4 +116,3 @@ graph TB
  class SITES, SITE1, SITE2 siteStyle
  class CLOUD_AWS cloudStyle
  class TPE2A Pine
-```
