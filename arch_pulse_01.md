@@ -1,115 +1,107 @@
 ```mermaid
 graph TB
- %% ===============================
- %%       COLLECTEUR LOCAL
- %% ===============================
- subgraph DC["🏢 COLLECTEUR (Bank LAN)"]
+ subgraph DC["🏢 COLLECTEUR"]
     direction TB
-    SCRIPT["🐍 Script Python<br/>(Ingestion TPE)"]
-    MODEM["📱 Modem 4G/5G<br/>(Monitoring APN)"]
-    n1["Telegraf"]
-    n2["InfluxDB (Local)"]
-    MODEM --> n1
-    SCRIPT --> n2
-    n1 --> n2
- end
-
- %% ===============================
- %%       SITE LOCAL BANQUE
- %% ===============================
- subgraph s1["🏢 LOCAL DATA (LAN BANK)"]
-    n5["📄 Journaux ATMs/TPEs"]
- end
- s1 --> SCRIPT
-
- %% ===============================
- %%        RÉSEAUX APN
- %% ===============================
- subgraph SITES["🏪 Réseau APN Privé"]
-    direction TB
-    subgraph SITE1["Site TPEs"]
-        TPE1A["💳 TPE 01 AVEC PUCE<br/>(192.168.1.50)"]
-        n6["💳 TPE 02 AVEC PUCE<br/>(192.168.1.51)"]
-    end
-    subgraph SITE2["Site ATMs"]
-        TPE2A["🏧 ATM"]
-    end
- end
- SITES --> n1
-
- %% ===============================
- %%         CLOUD AWS / HETZNER
- %% ===============================
- subgraph CLOUD_AWS["☁️ CLOUD (AWS / HETZNER)"]
-    direction TB
-
-    %% === BACKEND ===
-    subgraph BACKEND["🔧 Backend Microservices"]
-        API["⚡ API REST<br/>(FastAPI)"]
+        SCRIPT["🐍 Script Python<br>(Ingestion TPE)"]
+        MODEM["📱 Modem 4G/5G<br>(Monitoring APN)"]
+        n2["Influxdb"]
+        n1["Telegraf"]
+  end
+ subgraph BACKEND["🔧 Backend Microservices"]
+        API["⚡ API REST<br>(FastAPI)"]
+        RAG["🤖 Base Vectorielle<br>(RAG IA)"]
         ENGINE["⚙️ Analytics Engine"]
-        RAG["🤖 Base Vectorielle<br/>(RAG IA)"]
-    end
-
-    %% === STOCKAGE ===
-    subgraph STORAGE["💾 Stockage"]
-        INFLUX_CLOUD["📈 InfluxDB Cloud<br/>(Time-Series)"]
-        S3["🗄️ AWS S3<br/>(Archives)"]
-        POSTGRES["🐘 PostgreSQL<br/>(Métadonnées)"]
-    end
-
-    %% === FRONTEND ===
-    subgraph FRONTEND["🖥️ Frontend"]
-        REACT["⚛️ React SPA<br/>(Dashboards)"]
-        GRAFANA["📊 Grafana<br/>(Visualisation)"]
+  end
+ subgraph STORAGE["💾 Stockage"]
+        INFLUX_CLOUD["📈 InfluxDB Cloud<br>(Time-Series)"]
+        S3["🗄️ AWS S3<br>(Archives)"]
+        POSTGRES["🐘 PostgreSQL<br>(Métadonnées)"]
+  end
+ subgraph FRONTEND["🖥️ Frontend"]
+        REACT["⚛️ React SPA<br>(Dashboards)"]
+        GRAFANA["📊 Grafana<br>(Visualisation)"]
         CHATBOT["💬 Chatbot IA"]
-    end
-
-    %% Relations internes
-    API --> INFLUX_CLOUD
-    API --> S3
-    API --> POSTGRES
-    
-    INFLUX_CLOUD --> REACT
-    INFLUX_CLOUD --> GRAFANA
-    POSTGRES --> CHATBOT
- end
-
- %% ===============================
- %%         UTILISATEURS FINAUX
- %% ===============================
+  end
+ subgraph CLOUD_AWS["CLOUD_AWS"]
+    direction TB
+        BACKEND
+        STORAGE
+        FRONTEND
+  end
  subgraph USERS["👥 Utilisateurs Finaux"]
-    DG["👔 Direction Générale"]
-    DM["💳 Direction Monétique"]
-    DC_USER["📊 Direction Commerciale"]
-    IT["🔧 IT / Support"]
- end
-
- %% Relations Frontend -> Utilisateurs
- REACT -->|"🔐 HTTPS / OAuth2"| USERS
- GRAFANA --> USERS
- CHATBOT --> USERS
-
- %% Connexions Interzones (corrigée)
- n2 -->|"TLS 1·3 VPN sécurisé"| INFLUX_CLOUD
-
- %% ===============================
- %%           STYLES
- %% ===============================
- classDef datacenterStyle fill:#d1f2eb,stroke:#16a085,stroke-width:3px,color:#000
- classDef backendStyle fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#000
- classDef storageStyle fill:#cce5ff,stroke:#004085,stroke-width:2px,color:#000
- classDef frontendStyle fill:#f8d7da,stroke:#721c24,stroke-width:2px,color:#000
- classDef userStyle fill:#e2e3e5,stroke:#383d41,stroke-width:2px,color:#000
- classDef siteStyle fill:#e7f3ff,stroke:#0056b3,stroke-width:2px,color:#000
- classDef cloudStyle fill:#fff3cd,stroke:#ffc107,stroke-width:3px,color:#000
- classDef Pine stroke-width:1px,stroke-dasharray:none,stroke:#254336,fill:#27654A,color:#FFFFFF
-
- class DC, s1 datacenterStyle
- class BACKEND, ENGINE, API, RAG backendStyle
- class STORAGE, INFLUX_CLOUD, POSTGRES, S3 storageStyle
- class FRONTEND, REACT, GRAFANA, CHATBOT frontendStyle
- class USERS, DG, DM, DC_USER, IT userStyle
- class SITES, SITE1, SITE2 siteStyle
- class CLOUD_AWS cloudStyle
- class TPE2A Pine
+        DG["👔 Direction Générale"]
+        DM["💳 Direction Monétique"]
+        DC_USER["📊 Direction Commerciale"]
+        IT["🔧 IT / Support"]
+  end
+ subgraph SITE1["Site TPEs"]
+        TPE1A["💳 TPE 01 AVEC PUCE<br>(192.168.1.50)"]
+        n6["💳 TPE 02 AVEC PUCE<br>(192.168.1.50)"]
+  end
+ subgraph SITE2["Site ATMs<br>"]
+        TPE2A["💳 ATM"]
+  end
+ subgraph SITES["🏪 APN"]
+    direction TB
+        SITE1
+        SITE2
+  end
+ subgraph s1["🏢 LOCAL DATA<br>LAN BANK"]
+        n5["JOURNEAUX<br>ATMs/TPEs"]
+  end
+    API --> INFLUX_CLOUD & S3 & POSTGRES
+    ENGINE --> INFLUX_CLOUD
+    INFLUX_CLOUD --> REACT & GRAFANA
+    POSTGRES --> CHATBOT
+    REACT -- 🔐 HTTPS / OAuth2 --> USERS
+    GRAFANA --> USERS
+    CHATBOT --> USERS
+    MODEM --> n1
+    n1 --> n2
+    SCRIPT --> n2
+    s1 L_s1_SCRIPT_0@--> SCRIPT
+    INFLUX["Chiffrement TLS 1.3"] L_INFLUX_INFLUX_CLOUD_0@--> INFLUX_CLOUD
+    n2 L_n2_INFLUX_0@--- INFLUX
+    SITES L_SITES_n1_0@--> n1
+    n2@{ icon: "aws:arch-aws-deep-learning-containers", pos: "t", h: 160}
+    n1@{ icon: "aws:arch-aws-deep-learning-containers", pos: "t", h: 166}
+    n6@{ shape: rect}
+    n5@{ shape: rect}
+     API:::backendStyle
+     RAG:::backendStyle
+     ENGINE:::backendStyle
+     INFLUX_CLOUD:::storageStyle
+     S3:::storageStyle
+     POSTGRES:::storageStyle
+     REACT:::frontendStyle
+     GRAFANA:::frontendStyle
+     CHATBOT:::frontendStyle
+     DG:::userStyle
+     DM:::userStyle
+     DC_USER:::userStyle
+     IT:::userStyle
+     TPE1A:::cloudStyle
+     n6:::cloudStyle
+     TPE2A:::Pine
+     USERS:::userStyle
+     CLOUD_AWS:::cloudStyle
+    classDef datacenterStyle fill:#d1f2eb,stroke:#16a085,stroke-width:3px,color:#000
+    classDef backendStyle fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#000
+    classDef storageStyle fill:#cce5ff,stroke:#004085,stroke-width:2px,color:#000
+    classDef frontendStyle fill:#f8d7da,stroke:#721c24,stroke-width:2px,color:#000
+    classDef userStyle fill:#e2e3e5,stroke:#383d41,stroke-width:2px,color:#000
+    classDef siteStyle fill:#e7f3ff,stroke:#0056b3,stroke-width:2px,color:#000
+    classDef Pine stroke-width:1px, stroke-dasharray:none, stroke:#254336, fill:#27654A, color:#FFFFFF
+    classDef cloudStyle fill:#fff3cd, stroke:#ffc107, stroke-width:3px, color:#000
+    style SCRIPT stroke:#000000
+    style TPE2A stroke:#000000
+    style SITE1 stroke:#000000
+    style s1 stroke:#000000
+    style SITES fill:#C8E6C9,stroke:#000000
+    style CLOUD_AWS fill:#FFE0B2,stroke:#000000
+    style DC stroke:#000000
+    L_s1_SCRIPT_0@{ animation: slow } 
+    L_INFLUX_INFLUX_CLOUD_0@{ animation: slow } 
+    L_n2_INFLUX_0@{ animation: slow } 
+    L_SITES_n1_0@{ animation: slow }
 ```
