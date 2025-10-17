@@ -68,7 +68,7 @@ graph TB
     API --> INFLUX_CLOUD
     API --> S3
     API --> POSTGRES
-    ENGINE --> INFLUX_CLOUD
+    
     INFLUX_CLOUD --> REACT
     INFLUX_CLOUD --> GRAFANA
     POSTGRES --> CHATBOT
