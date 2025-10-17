@@ -46,8 +46,8 @@ graph TB
         SITE1
         SITE2
   end
- subgraph s1["🏢 LOCAL DATA<br>LAN BANK"]
-        n5["JOURNEAUX<br>ATMs/TPEs"]
+ subgraph s1["🏢"]
+        n5["BANK DATA <br> JOURNEAUX<br>ATMs/TPEs"]
   end
     API --> INFLUX_CLOUD & S3 & POSTGRES
     ENGINE --> INFLUX_CLOUD
