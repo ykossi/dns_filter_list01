@@ -47,7 +47,7 @@ graph TB
         SITE2
   end
  subgraph s1["🏢"]
-        n5["BANK DATA <br> JOURNEAUX<br>ATMs/TPEs"]
+        n5["BANK DATA <br>JOURNEAUX<br>ATMs/TPEs"]
   end
     API --> INFLUX_CLOUD & S3 & POSTGRES
     ENGINE --> INFLUX_CLOUD
@@ -58,13 +58,13 @@ graph TB
     CHATBOT --> USERS
     s1 L_s1_SCRIPT_0@--> SCRIPT
     INFLUX["Chiffrement TLS 1.3"] L_INFLUX_INFLUX_CLOUD_0@--> INFLUX_CLOUD
-    MODEM --> n8
-    n8 --> n7
-    SCRIPT --> n7
-    TPE2A L_TPE2A_n8_0@--> n8
-    TPE1A --> n8
-    n6 --> n8
+    MODEM L_MODEM_n8_0@--> n8
+    n8 L_n8_n7_0@--> n7
+    SCRIPT L_SCRIPT_n7_0@--> n7
     n7 L_n7_INFLUX_0@--> INFLUX
+    TPE2A L_TPE2A_MODEM_0@--> MODEM
+    TPE1A L_TPE1A_MODEM_0@--> MODEM
+    n6 L_n6_MODEM_0@--> MODEM
     n7@{ shape: rect}
     n8@{ shape: rect}
     n6@{ shape: rect}
@@ -106,6 +106,12 @@ graph TB
     style DC stroke:#000000
     L_s1_SCRIPT_0@{ animation: slow } 
     L_INFLUX_INFLUX_CLOUD_0@{ animation: slow } 
-    L_TPE2A_n8_0@{ animation: slow } 
-    L_n7_INFLUX_0@{ animation: slow }
+    L_MODEM_n8_0@{ animation: slow } 
+    L_n8_n7_0@{ animation: slow } 
+    L_SCRIPT_n7_0@{ animation: slow } 
+    L_n7_INFLUX_0@{ animation: slow } 
+    L_TPE2A_MODEM_0@{ animation: slow } 
+    L_TPE1A_MODEM_0@{ animation: slow } 
+    L_n6_MODEM_0@{ animation: slow }
+
 ```
